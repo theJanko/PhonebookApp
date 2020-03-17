@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Add new contact{% endblock %}
+{% block content %}
+    <h2>Add new contact</h2>
+    <form action="" method="POST">{% csrf_token %}
+    {{ person_form.non_field_errors }}
+    {{ phone_form.non_field_errors }}
+    {{ email_form.non_field_errors }}
+    <div class="field_container">
+    {%  for field in person_form %}
+        <div class="field_container">
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}{{ field.help_text }}
+        </div>
+    {% endfor %}
+
+    {% for field in phone_form %}
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}{{ field.help_text }}
+    {% endfor %}
+
+    {% for field in email_form %}
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}{{ field.help_text }}
+        </div>
+    {% endfor %}
+    <input type="submit" value="Submit"/>
+    <a href="/"><input type="button" value="cancel"></a>
+    </form>
+{% endblock %}

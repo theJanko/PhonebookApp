@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}List of contacts{% endblock %}
+{% block content %}
+{% if contacts %}
+    <h2>List of Contacts</h2>
+    <ul>
+    {% for person in contacts %}
+        <li><a href="/phonebookapp/detail/{{ person.id }}/">{{ person.name }} {{ person.surname }}</a></li>
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>There is no contacts in phonebook</p>
+{% endif %}
+
+{% endblock %}
