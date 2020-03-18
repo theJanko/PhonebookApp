@@ -10,16 +10,16 @@ class Person(models.Model):
 
 
 class Phone(models.Model):
-    person = models.ForeignKey(Person, editable=False, on_delete=models.CASCADE)
-    phone_number = models.CharField('Phone number', max_length=50)
+    person = models.ForeignKey(Person, editable=False, on_delete=models.CASCADE, null=True)
+    phone_number = models.CharField('Phone number', max_length=50, blank=True, null=True, unique=True)
 
     def __str__(self):
         return '%s, %s' % (self.person, self.phone_number)
 
 
 class Email(models.Model):
-    person = models.ForeignKey(Person, editable=False, on_delete=models.CASCADE)
-    email = models.EmailField('Email', max_length=254)
+    person = models.ForeignKey(Person, editable=False, on_delete=models.CASCADE, null=True)
+    email = models.EmailField('Email', max_length=254, blank=True, null=True, unique=True)
 
     def __str__(self):
         return '%s, %s' % (self.person, self.email)

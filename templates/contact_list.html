@@ -5,7 +5,10 @@
     <h2>List of Contacts</h2>
     <ul>
     {% for person in contacts %}
-        <li><a href="/phonebookapp/detail/{{ person.id }}/">{{ person.name }} {{ person.surname }}</a></li>
+        <li><a href="/phonebookapp/{{ person.id }}/">{{ person.name }} {{ person.surname }}</a></li>
+        <button type="button">
+            <a href="{% url "delete" person.id %}">Delete contact</a>
+        </button>
     {% endfor %}
     </ul>
     {% else %}

@@ -7,6 +7,6 @@
     <form action="{% url "delete" person.id %}" method="POST">
       {% csrf_token %}
       <input type="submit" value="Delete" />
-      <a href="{% url "home" %}"><input type="button" value="Cancel" /></a>
+      <a href="{% url "contact-list" %}"><input type="button" value="Cancel" /></a>
     </form>
 {% endblock %}

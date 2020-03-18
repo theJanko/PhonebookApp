@@ -11,10 +11,12 @@ class PersonForm(ModelForm):
 class PhoneForm(ModelForm):
     class Meta:
         model = Phone
+        exclude = ['person']
         fields = ['phone_number']
 
 
 class EmailForm(ModelForm):
     class Meta:
         model = Email
+        exclude = ['person']
         fields = ['email']
