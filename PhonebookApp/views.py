@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
-from PhonebookApp.forms import PersonForm, PhoneForm, EmailForm
+from django.contrib import messages
 
+from PhonebookApp.forms import PersonForm, PhoneForm, EmailForm
 from PhonebookApp.models import Person, Phone, Email
 
 
@@ -49,8 +50,14 @@ def contact_list(request):
 
 def delete(request, person_id):
     person = Person.objects.get(pk=person_id)
-    email = Email.objects.get(p)
+    phone = Phone.objects.filter(person_id=person_id)
+    email = Email.objects.filter(person_id=person_id)
     if request.method == 'POST':
-        person.delete()
-        return redirect('/phonebookapp/')
-    return render(request, 'delete.html', {'person': person})
+        if phone.exists() or email.exists():
+            messages.WARNING(request, "You can't delete this person.")
+        else:
+            person.delete(), phone.delete(), email.delete()
+            return redirect('/phonebookapp/')
+    return render(request, 'delete.html', {'person': person,
+                                           'phone': phone,
+                                           'email': email})
