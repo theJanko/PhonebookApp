@@ -61,3 +61,64 @@ def delete(request, person_id):
     return render(request, 'delete.html', {'person': person,
                                            'phone': phone,
                                            'email': email})
+
+
+"""
+def edit(request, person_id):
+    person = Person.objects.get(pk=person_id)
+    phone = Phone.objects.filter(person_id=person_id)
+    email = Email.objects.filter(person_id=person_id)
+    if request.method == 'POST':
+        person_form = PersonForm(request.POST, instance=person)
+        if person_form.is_valid():
+            person_form.save()
+            return redirect('detail', person_id)
+        else:
+            person_form = PersonForm(instance=person)
+        phone_form = PhoneForm(request.POST, instance=phone)
+        if phone_form.is_valid():
+            phone_form.save()
+            return redirect('detail', person_id)
+        else:
+            phone_form = PhoneForm(instance=phone)
+        email_form = EmailForm(request.POST, instance=email)
+        if email_form.is_valid():
+            email_form.save()
+            return redirect('detail', person_id)
+        else:
+            email_form = EmailForm(instance=email)
+        return render(request, 'edit.html', {'person_form': person_form,
+                                             'phone_form': phone_form,
+                                             'email_form': email_form})
+"""
+
+
+def edit(request, person_id):
+    person = Person.objects.get(pk=person_id)
+    phone = Phone.objects.filter(person_id=person_id).first()
+    email = Email.objects.filter(person_id=person_id).first()
+    if request.method == 'POST':
+        person_form = PersonForm(request.POST, instance=person)
+        phone_form = PhoneForm(request.POST, instance=phone)
+        email_form = EmailForm(request.POST, instance=email)
+        if person_form.is_valid() or phone_form.is_valid() or email_form.is_valid():
+            new_person = person_form.save()
+            new_phone = phone_form.save(commit=False)
+            new_email = email_form.save(commit=False)
+            new_phone.person = new_person
+            new_phone.save()
+            new_email.person = new_person
+            new_email.save()
+            return redirect('detail', person_id)
+    else:
+        person_form = PersonForm(instance=person)
+        phone_form = PhoneForm(instance=phone)
+        email_form = EmailForm(instance=email)
+    return render(request, 'edit.html', {'person_form': person_form,
+                                         'phone_form': phone_form,
+                                         'email_form': email_form})
+
+
+def search(request):
+    TODO
+    pass

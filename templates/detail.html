@@ -13,6 +13,9 @@
         {% endfor %}
         </ul>
     {% else %}
-        <p><a href="{% url "delete" persons_details.id %}">Delete</a></p>
+        <form>
+        <button formaction="{% url "delete" persons_details.id %}">Delete</button>
+        <button formaction="{% url "edit" persons_details.id %}">Edit</button>
+        </form>
     {% endif %}
 {% endblock %}
