@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Search results{% endblock %}
+{% block content %}
+    <h1>Search Results</h1>
+
+    <form method="GET" action="{% url 'search_results' %}">
+    <input name="q" value="{{ request.GET.q }}" placeholder="search..">
+    <button class="btn btn-success" type="submit"></button>
+    </form>
+
+    <ul>
+    {% for person in contacts %}
+        <li>
+            {{ person.name }} {{ person.surname }}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

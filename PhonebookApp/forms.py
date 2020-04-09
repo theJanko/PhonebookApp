@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from PhonebookApp.models import Person, Phone, Email
+from django import forms
 
 
 class PersonForm(ModelForm):

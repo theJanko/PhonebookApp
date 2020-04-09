@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.contrib import messages
+from django.db.models import Q
 
 from PhonebookApp.forms import PersonForm, PhoneForm, EmailForm
 from PhonebookApp.models import Person, Phone, Email
@@ -63,36 +64,6 @@ def delete(request, person_id):
                                            'email': email})
 
 
-"""
-def edit(request, person_id):
-    person = Person.objects.get(pk=person_id)
-    phone = Phone.objects.filter(person_id=person_id)
-    email = Email.objects.filter(person_id=person_id)
-    if request.method == 'POST':
-        person_form = PersonForm(request.POST, instance=person)
-        if person_form.is_valid():
-            person_form.save()
-            return redirect('detail', person_id)
-        else:
-            person_form = PersonForm(instance=person)
-        phone_form = PhoneForm(request.POST, instance=phone)
-        if phone_form.is_valid():
-            phone_form.save()
-            return redirect('detail', person_id)
-        else:
-            phone_form = PhoneForm(instance=phone)
-        email_form = EmailForm(request.POST, instance=email)
-        if email_form.is_valid():
-            email_form.save()
-            return redirect('detail', person_id)
-        else:
-            email_form = EmailForm(instance=email)
-        return render(request, 'edit.html', {'person_form': person_form,
-                                             'phone_form': phone_form,
-                                             'email_form': email_form})
-"""
-
-
 def edit(request, person_id):
     person = Person.objects.get(pk=person_id)
     phone = Phone.objects.filter(person_id=person_id).first()
@@ -120,5 +91,12 @@ def edit(request, person_id):
 
 
 def search(request):
-    TODO
-    pass
+    template = "search_results.html"
+    query = request.GET.get('q')
+    results = Person.objects.filter(Q(name__icontains=query) or Q(surname__icontains=query))
+    pages = request, results
+    context = {
+        'items': pages[0],
+        'page_range': pages[1]
+    }
+    return render(request, template, context)

@@ -9,6 +9,9 @@
     <a href="{% url "contact-list" %}">List of contacts</a>
     <a href="{% url "add" %}">Add new contact</a>
   </nav>
+  <form action="{% url 'search_results' %}" method="get">
+    <input name="q" type="text" placeholder="Search...">
+  </form>
   {% block content %}
   {% endblock %}
 </body>
