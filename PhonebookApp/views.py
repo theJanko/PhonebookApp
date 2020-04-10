@@ -54,11 +54,11 @@ def delete(request, person_id):
     phone = Phone.objects.filter(person_id=person_id)
     email = Email.objects.filter(person_id=person_id)
     if request.method == 'POST':
-        if phone.exists() or email.exists():
-            messages.WARNING(request, "You can't delete this person.")
+        if phone.exists() and email.exists() or phone is NULL and email is None:
+            return HttpResponse("You cant't delete this contact!")
         else:
             person.delete(), phone.delete(), email.delete()
-            return redirect('/phonebookapp/')
+            return redirect('/phonebookapp/contacts/')
     return render(request, 'delete.html', {'person': person,
                                            'phone': phone,
                                            'email': email})

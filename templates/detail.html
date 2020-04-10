@@ -4,18 +4,8 @@
     <h2>{{ persons_details.name }} {{ persons_details.surname }}</h2>
     <p><b>Email: </b>{{ pemail.email }}</p>
     <p><b>Phone Number: </b>{{ persons_phone.phone_number }}</p>
-
-
-    {% if messages %}
-        <ul class="messages">
-        {% for message in messages %}
-            <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <form>
+    <form>
         <button formaction="{% url "delete" persons_details.id %}">Delete</button>
         <button formaction="{% url "edit" persons_details.id %}">Edit</button>
-        </form>
-    {% endif %}
+    </form>
 {% endblock %}
