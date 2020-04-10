@@ -93,10 +93,10 @@ def edit(request, person_id):
 def search(request):
     template = "search_results.html"
     query = request.GET.get('q')
-    results = Person.objects.filter(Q(name__icontains=query) or Q(surname__icontains=query))
-    pages = request, results
+    results = Person.objects.filter(Q(name__icontains=query) | Q(surname__icontains=query))\
+        or Phone.objects.filter(Q(phone_number__icontains=query))\
+        or Email.objects.filter(Q(email__icontains=query))
     context = {
-        'items': pages[0],
-        'page_range': pages[1]
+        'results': results
     }
     return render(request, template, context)

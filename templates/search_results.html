@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
 {% block title %}Search results{% endblock %}
 {% block content %}
+    {% if results %}
     <h1>Search Results</h1>
 
-    <form method="GET" action="{% url 'search_results' %}">
-    <input name="q" value="{{ request.GET.q }}" placeholder="search..">
-    <button class="btn btn-success" type="submit"></button>
-    </form>
-
     <ul>
-    {% for person in contacts %}
-        <li>
-            {{ person.name }} {{ person.surname }}
-        </li>
+    {% for result in results %}
+        <li><a href="/phonebookapp/{{ result.id }}/">{{ result.name }} {{ result.surname }}</a>
+            <a href="/phonebookapp/{{ result.id }}">{{ result.person.name }} {{ result.person.surname }}</a></li>
     {% endfor %}
     </ul>
+        {% else %}
+        <p>Can't find what you are looking for.<br>
+        Check spelling again!</p>
+    {% endif %}
 {% endblock %}
